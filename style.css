@@ -555,6 +555,16 @@ section h2 {
     color: #ccc;
     line-height: 1.6;
 }
+.team-member-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px auto;
+    display: block;
+    border: 3px solid #00ff88;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
 
 /* Contact Section */
 .contact-grid {
