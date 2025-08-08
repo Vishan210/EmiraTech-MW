@@ -188,6 +188,81 @@ body {
     background-size: cover;
     background-position: center;
 }
+/* Add this to your existing style.css - Mobile Horizontal Scrolling for Product Grid */
+
+/* Update the existing product-grid styles */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Mobile-specific horizontal scrolling for smartphones section */
+@media (max-width: 768px) {
+    .products-section .product-grid {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        gap: 20px;
+        padding: 0 20px 20px 20px;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .products-section .product-card {
+        flex: 0 0 280px; /* Fixed width, no shrinking/growing */
+        scroll-snap-align: start;
+        margin-bottom: 0;
+    }
+    
+    /* Hide scrollbar but keep functionality */
+    .products-section .product-grid::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .products-section .product-grid::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .products-section .product-grid::-webkit-scrollbar-thumb {
+        background: var(--futuristic-green);
+        border-radius: 3px;
+        opacity: 0.7;
+    }
+    
+    .products-section .product-grid::-webkit-scrollbar-thumb:hover {
+        background: #00cc6a;
+    }
+    
+    /* Add padding to the section container for mobile */
+    .products-section.container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    /* Adjust section title for mobile */
+    .products-section .section-title {
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .products-section .product-card {
+        flex: 0 0 260px; /* Slightly smaller width for very small screens */
+    }
+    
+    .products-section .product-grid {
+        padding: 0 15px 20px 15px;
+        gap: 15px;
+    }
+    
+    .products-section .section-title {
+        padding: 0 15px;
+        font-size: 2rem;
+    }
+}
 
 .hero::before {
     content: '';
