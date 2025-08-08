@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - EmiraTech MW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+            text-decoration: none;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #00d4ff;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #ffffff, #00ff88);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .weekly-delivery {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        .weekly-delivery h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border-color: #00d4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Product Grid */
+        .products-section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #00d4ff;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            color: #00d4ff;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .product-features li {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .product-features li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+        }
+
+        .learn-more-btn {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .learn-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Custom Orders Section */
+        .custom-orders {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .custom-orders h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        .custom-orders p {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-menu ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .filter-tabs {
+                gap: 0.5rem;
+            }
+
+            .filter-tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .custom-orders {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">EmiraTech MW</a>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#smartphones">Smartphones</a></li>
+                        <li><a href="#accessories">Accessories</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="floating">Future Tech Catalog</h1>
+                <p>Discover cutting-edge devices and accessories, updated weekly with the latest technology</p>
+                
+                <div class="weekly-delivery">
+                    <h3>📅 Weekly Fresh Stock</h3>
+                    <p>New orders placed weekly • Pick up every Monday • Always the latest models</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterProducts('all')">All Products</button>
+                <button class="filter-tab" onclick="filterProducts('smartphones')">Smartphones</button>
+                <button class="filter-tab" onclick="filterProducts('accessories')">Accessories</button>
+                <button class="filter-tab" onclick="filterProducts('wearables')">Wearables</button>
+                <button class="filter-tab" onclick="filterProducts('audio')">Audio</button>
+            </div>
+        </section>
+
+        <!-- Smartphones Section -->
+        <section class="products-section container" id="smartphones">
+            <h2 class="section-title">📱 Latest Smartphones</h2>
+            <div class="product-grid">
+                <!-- Redmi 14C -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">NEW</div>
+                    <img src="images/iPhone (1).jpeg" alt="Redmi 14C" class="product-image">
+                    <h3 class="product-title">Redmi 14C</h3>
+                    <div class="product-price">From $150</div>
+                    <ul class="product-features">
+                        <li>6.88" HD+ Display</li>
+                        <li>50MP AI Camera</li>
+                        <li>5000mAh Battery</li>
+                        <li>Helio G81-Ultra Processor</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- Google Pixel 6 -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">POPULAR</div>
+                    <img src="images/iPhone (1).jpeg" alt="Google Pixel 6" class="product-image">
+                    <h3 class="product-title">Google Pixel 6</h3>
+                    <div class="product-price">From $300</div>
+                    <ul class="product-features">
+                        <li>6.4" OLED Display</li>
+                        <li>Google Tensor Chip</li>
+                        <li>50MP Dual Camera</li>
+                        <li>Pure Android Experience</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- Google Pixel 6 Pro -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">PRO</div>
+                    <img src="images/iPhone (1).jpeg" alt="Google Pixel 6 Pro" class="product-image">
+                    <h3 class="product-title">Google Pixel 6 Pro</h3>
+                    <div class="product-price">From $450</div>
+                    <ul class="product-features">
+                        <li>6.7" LTPO OLED 120Hz</li>
+                        <li>Google Tensor Chip</li>
+                        <li>50MP Triple Camera</li>
+                        <li>12GB RAM Options</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- Google Pixel 7 -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">LATEST</div>
+                    <img src="images/iPhone (1).jpeg" alt="Google Pixel 7" class="product-image">
+                    <h3 class="product-title">Google Pixel 7</h3>
+                    <div class="product-price">From $400</div>
+                    <ul class="product-features">
+                        <li>6.3" OLED 90Hz Display</li>
+                        <li>Google Tensor G2</li>
+                        <li>Enhanced AI Photography</li>
+                        <li>5 Years Security Updates</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- Google Pixel 7 Pro -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">FLAGSHIP</div>
+                    <img src="images/iPhone (1).jpeg" alt="Google Pixel 7 Pro" class="product-image">
+                    <h3 class="product-title">Google Pixel 7 Pro</h3>
+                    <div class="product-price">From $550</div>
+                    <ul class="product-features">
+                        <li>6.7" LTPO OLED 120Hz</li>
+                        <li>Google Tensor G2</li>
+                        <li>50MP Triple Camera System</li>
+                        <li>30x Super Res Zoom</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- iPhone Models -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">iOS</div>
+                    <img src="images/iPhone (1).jpeg" alt="iPhone 13" class="product-image">
+                    <h3 class="product-title">iPhone 13</h3>
+                    <div class="product-price">From $500</div>
+                    <ul class="product-features">
+                        <li>6.1" Super Retina XDR</li>
+                        <li>A15 Bionic Chip</li>
+                        <li>Dual 12MP Camera</li>
+                        <li>Cinematic Mode</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">COMPACT</div>
+                    <img src="images/iPhone (1).jpeg" alt="iPhone 13 Mini" class="product-image">
+                    <h3 class="product-title">iPhone 13 Mini</h3>
+                    <div class="product-price">From $450</div>
+                    <ul class="product-features">
+                        <li>5.4" Super Retina XDR</li>
+                        <li>A15 Bionic Chip</li>
+                        <li>Dual 12MP Camera</li>
+                        <li>Compact Design</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">PRO</div>
+                    <img src="images/iPhone (1).jpeg" alt="iPhone 13 Pro" class="product-image">
+                    <h3 class="product-title">iPhone 13 Pro</h3>
+                    <div class="product-price">From $650</div>
+                    <ul class="product-features">
+                        <li>6.1" ProMotion Display</li>
+                        <li>A15 Bionic Pro</li>
+                        <li>Triple 12MP Pro Camera</li>
+                        <li>ProRAW & ProRes</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <!-- Samsung Models -->
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">SAMSUNG</div>
+                    <img src="images/iPhone (1).jpeg" alt="Galaxy S22" class="product-image">
+                    <h3 class="product-title">Galaxy S22</h3>
+                    <div class="product-price">From $400</div>
+                    <ul class="product-features">
+                        <li>6.1" Dynamic AMOLED 2X</li>
+                        <li>Snapdragon 8 Gen 1</li>
+                        <li>50MP Triple Camera</li>
+                        <li>8K Video Recording</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="smartphones">
+                    <div class="product-badge">ULTRA</div>
+                    <img src="images/iPhone (1).jpeg" alt="Galaxy S22 Ultra" class="product-image">
+                    <h3 class="product-title">Galaxy S22 Ultra</h3>
+                    <div class="product-price">From $650</div>
+                    <ul class="product-features">
+                        <li>6.8" Dynamic AMOLED 2X</li>
+                        <li>Built-in S Pen</li>
+                        <li>108MP Quad Camera</li>
+                        <li>100x Space Zoom</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accessories Section -->
+        <section class="products-section container" id="accessories">
+            <h2 class="section-title">🔌 Premium Accessories</h2>
+            <div class="product-grid">
+                <div class="product-card loading" data-category="accessories">
+                    <div class="product-badge">POWER</div>
+                    <img src="images/iPhone (1).jpeg" alt="Fast Wireless Charger" class="product-image">
+                    <h3 class="product-title">15W Fast Wireless Charger</h3>
+                    <div class="product-price">From $35</div>
+                    <ul class="product-features">
+                        <li>15W Fast Charging</li>
+                        <li>Universal Compatibility</li>
+                        <li>LED Charging Indicator</li>
+                        <li>Premium Build Quality</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="accessories">
+                    <div class="product-badge">PORTABLE</div>
+                    <img src="images/iPhone (1).jpeg" alt="Power Bank" class="product-image">
+                    <h3 class="product-title">20000mAh Power Bank</h3>
+                    <div class="product-price">From $45</div>
+                    <ul class="product-features">
+                        <li>20000mAh Capacity</li>
+                        <li>PD 22.5W Fast Charging</li>
+                        <li>Digital Display</li>
+                        <li>Multiple Device Charging</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="accessories">
+                    <div class="product-badge">PROTECTION</div>
+                    <img src="images/iPhone (1).jpeg" alt="Phone Cases" class="product-image">
+                    <h3 class="product-title">Premium Phone Cases</h3>
+                    <div class="product-price">From $25</div>
+                    <ul class="product-features">
+                        <li>Military Grade Protection</li>
+                        <li>Precise Cutouts</li>
+                        <li>Wireless Charging Compatible</li>
+                        <li>Various Colors Available</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="accessories">
+                    <div class="product-badge">DISPLAY</div>
+                    <img src="images/iPhone (1).jpeg" alt="Screen Protectors" class="product-image">
+                    <h3 class="product-title">Tempered Glass Screen Protectors</h3>
+                    <div class="product-price">From $15</div>
+                    <ul class="product-features">
+                        <li>9H Hardness Rating</li>
+                        <li>99.9% Transparency</li>
+                        <li>Easy Installation Kit</li>
+                        <li>Bubble-Free Application</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audio Section -->
+        <section class="products-section container" id="audio">
+            <h2 class="section-title">🎵 Audio Excellence</h2>
+            <div class="product-grid">
+                <div class="product-card loading" data-category="audio">
+                    <div class="product-badge">WIRELESS</div>
+                    <img src="images/iPhone (1).jpeg" alt="Bluetooth Earbuds" class="product-image">
+                    <h3 class="product-title">Pro Wireless Earbuds</h3>
+                    <div class="product-price">From $80</div>
+                    <ul class="product-features">
+                        <li>Active Noise Cancellation</li>
+                        <li>30H Total Playtime</li>
+                        <li>IPX5 Water Resistance</li>
+                        <li>Touch Controls</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="audio">
+                    <div class="product-badge">PORTABLE</div>
+                    <img src="images/iPhone (1).jpeg" alt="Bluetooth Speaker" class="product-image">
+                    <h3 class="product-title">Portable Bluetooth Speaker</h3>
+                    <div class="product-price">From $60</div>
+                    <ul class="product-features">
+                        <li>360° Surround Sound</li>
+                        <li>20H Battery Life</li>
+                        <li>Waterproof Design</li>
+                        <li>RGB Light Effects</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wearables Section -->
+        <section class="products-section container" id="wearables">
+            <h2 class="section-title">⌚ Smart Wearables</h2>
+            <div class="product-grid">
+                <div class="product-card loading" data-category="wearables">
+                    <div class="product-badge">FITNESS</div>
+                    <img src="images/iPhone (1).jpeg" alt="Smart Watch" class="product-image">
+                    <h3 class="product-title">Fitness Smart Watch</h3>
+                    <div class="product-price">From $120</div>
+                    <ul class="product-features">
+                        <li>1.4" AMOLED Display</li>
+                        <li>7-Day Battery Life</li>
+                        <li>100+ Sport Modes</li>
+                        <li>Health Monitoring</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+
+                <div class="product-card loading" data-category="wearables">
+                    <div class="product-badge">HEALTH</div>
+                    <img src="images/iPhone (1).jpeg" alt="Fitness Tracker" class="product-image">
+                    <h3 class="product-title">Advanced Fitness Tracker</h3>
+                    <div class="product-price">From $70</div>
+                    <ul class="product-features">
+                        <li>24/7 Heart Rate Monitor</li>
+                        <li>Sleep Quality Analysis</li>
+                        <li>14-Day Battery Life</li>
+                        <li>Water Resistant 50M</li>
+                    </ul>
+                    <button class="learn-more-btn">Order Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Orders Section -->
+        <section class="custom-orders container">
+            <h3>🇦🇪 Special Orders from UAE</h3>
+            <p>Looking for something specific that's not in our catalog? We can source premium devices and accessories directly from the UAE market. From the latest flagships to specialized tech gear, we'll help you get exactly what you need.</p>
+            <a href="#contact" class="contact-btn">Request Custom Order</a>
+        </section>
+    </main>
+
+    <script>
+        // Filter functionality
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const tabs = document.querySelectorAll('.filter-tab');
+            
+            // Update active tab
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter products
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                    product.style.animation = 'fadeInUp 0.6s ease forwards';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+       // Add loading animation delay for staggered effect
+       document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animationDelay = `${index * 0.1}s`;
+                }, 100);
+            });
+        });
+
+        // Enhanced product interaction
+        document.querySelectorAll('.learn-more-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.product-card');
+                const productTitle = card.querySelector('.product-title').textContent;
+                const productPrice = card.querySelector('.product-price').textContent;
+                
+                // Create modal or redirect to order page
+                showOrderModal(productTitle, productPrice);
+            });
+        });
+
+        // Order Modal functionality
+        function showOrderModal(title, price) {
+            const modal = document.createElement('div');
+            modal.className = 'order-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Order ${title}</h2>
+                        <span class="close-modal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-price">${price}</p>
+                        <form class="order-form">
+                            <div class="form-group">
+                                <label>Your Name</label>
+                                <input type="text" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" required placeholder="+265 xxx xxx xxx">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" required placeholder="your.email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred Storage/Color</label>
+                                <select required>
+                                    <option value="">Select option</option>
+                                    <option value="64gb-black">64GB - Black</option>
+                                    <option value="128gb-black">128GB - Black</option>
+                                    <option value="256gb-black">256GB - Black</option>
+                                    <option value="64gb-white">64GB - White</option>
+                                    <option value="128gb-white">128GB - White</option>
+                                    <option value="256gb-white">256GB - White</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Delivery Location in Lilongwe</label>
+                                <input type="text" required placeholder="Area/Location details">
+                            </div>
+                            <div class="form-group">
+                                <label>Additional Notes</label>
+                                <textarea placeholder="Any special requirements or questions?"></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="submit" class="order-submit-btn">
+                                    <span>📱</span> Place Order
+                                </button>
+                                <p class="delivery-info">
+                                    <strong>📅 Next Delivery:</strong> Monday pickup available<br>
+                                    <strong>💰 Payment:</strong> Cash on delivery or mobile money
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close modal functionality
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            // Form submission
+            modal.querySelector('.order-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleOrderSubmission(modal, title);
+            });
+        }
+
+        // Handle order form submission
+        function handleOrderSubmission(modal, productTitle) {
+            const formData = new FormData(modal.querySelector('.order-form'));
+            const submitBtn = modal.querySelector('.order-submit-btn');
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span>⏳</span> Processing Order...';
+            submitBtn.disabled = true;
+            
+            // Simulate order processing
+            setTimeout(() => {
+                // Show success message
+                modal.querySelector('.modal-body').innerHTML = `
+                    <div class="success-message">
+                        <div class="success-icon">✅</div>
+                        <h3>Order Placed Successfully!</h3>
+                        <p>Thank you for your order of <strong>${productTitle}</strong></p>
+                        <div class="order-details">
+                            <h4>What happens next?</h4>
+                            <ul>
+                                <li>📞 We'll call you within 24 hours to confirm details</li>
+                                <li>📦 Your device will be ordered this week</li>
+                                <li>📅 Pickup available next Monday</li>
+                                <li>💰 Payment on delivery (Cash or Mobile Money)</li>
+                            </ul>
+                        </div>
+                        <button class="close-success-btn">Close</button>
+                    </div>
+                `;
+                
+                modal.querySelector('.close-success-btn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }, 2000);
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                const rate = scrolled * -0.5;
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Product card hover effects with sound (optional)
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Search functionality
+        function initSearchFeature() {
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'search-container';
+            searchContainer.innerHTML = `
+                <div class="search-box">
+                    <input type="text" placeholder="🔍 Search products..." id="productSearch">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            `;
+            
+            const filterTabs = document.querySelector('.filter-tabs');
+            filterTabs.parentNode.insertBefore(searchContainer, filterTabs);
+            
+            const searchInput = document.getElementById('productSearch');
+            const searchResults = document.getElementById('searchResults');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const products = document.querySelectorAll('.product-card');
+                
+                if (query.length > 0) {
+                    const matches = [];
+                    products.forEach(product => {
+                        const title = product.querySelector('.product-title').textContent.toLowerCase();
+                        const features = Array.from(product.querySelectorAll('.product-features li'))
+                            .map(li => li.textContent.toLowerCase()).join(' ');
+                        
+                        if (title.includes(query) || features.includes(query)) {
+                            matches.push(product);
+                        }
+                    });
+                    
+                    // Show/hide products based on search
+                    products.forEach(product => {
+                        if (matches.includes(product)) {
+                            product.style.display = 'block';
+                            product.style.animation = 'fadeInUp 0.4s ease forwards';
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                    
+                    // Update results counter
+                    searchResults.innerHTML = `
+                        <div class="search-info">
+                            Found ${matches.length} product${matches.length !== 1 ? 's' : ''}
+                            ${query.length > 0 ? `for "${query}"` : ''}
+                        </div>
+                    `;
+                    searchResults.style.display = 'block';
+                } else {
+                    // Reset to show all products
+                    products.forEach(product => {
+                        product.style.display = 'block';
+                    });
+                    searchResults.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize search feature
+        document.addEventListener('DOMContentLoaded', initSearchFeature);
+
+        // WhatsApp contact integration
+        function initWhatsAppContact() {
+            const whatsappBtn = document.createElement('div');
+            whatsappBtn.className = 'whatsapp-float';
+            whatsappBtn.innerHTML = `
+                <a href="https://wa.me/265XXXxxxxxx?text=Hi,%20I'm%20interested%20in%20your%20products" target="_blank">
+                    <span>💬</span>
+                    <div class="tooltip">Chat with us on WhatsApp</div>
+                </a>
+            `;
+            document.body.appendChild(whatsappBtn);
+        }
+
+        // Initialize WhatsApp button
+        document.addEventListener('DOMContentLoaded', initWhatsAppContact);
+
+        // Price comparison feature
+        function addPriceComparison() {
+            const compareBtn = document.createElement('div');
+            compareBtn.className = 'compare-toggle';
+            compareBtn.innerHTML = `
+                <button onclick="toggleCompareMode()">
+                    <span>⚖️</span> Compare Products
+                </button>
+                <div class="compare-bar" id="compareBar" style="display: none;">
+                    <div class="compare-items" id="compareItems"></div>
+                    <button onclick="showComparison()" id="compareButton" disabled>
+                        Compare Selected (0)
+                    </button>
+                </div>
+            `;
+            
+            const hero = document.querySelector('.hero');
+            hero.after(compareBtn);
+        }
+
+        let compareMode = false;
+        let selectedProducts = [];
+
+        function toggleCompareMode() {
+            compareMode = !compareMode;
+            const products = document.querySelectorAll('.product-card');
+            const compareBar = document.getElementById('compareBar');
+            
+            if (compareMode) {
+                products.forEach(product => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'compare-checkbox';
+                    checkbox.addEventListener('change', updateCompareSelection);
+                    product.appendChild(checkbox);
+                });
+                compareBar.style.display = 'flex';
+            } else {
+                document.querySelectorAll('.compare-checkbox').forEach(cb => cb.remove());
+                compareBar.style.display = 'none';
+                selectedProducts = [];
+            }
+        }
+
+        function updateCompareSelection() {
+            const checkboxes = document.querySelectorAll('.compare-checkbox:checked');
+            const compareButton = document.getElementById('compareButton');
+            
+            selectedProducts = Array.from(checkboxes).map(cb => cb.closest('.product-card'));
+            compareButton.textContent = `Compare Selected (${selectedProducts.length})`;
+            compareButton.disabled = selectedProducts.length < 2;
+        }
+
+        function showComparison() {
+            if (selectedProducts.length < 2) return;
+            
+            const comparisonModal = document.createElement('div');
+            comparisonModal.className = 'comparison-modal';
+            
+            let comparisonHTML = `
+                <div class="comparison-content">
+                    <div class="comparison-header">
+                        <h2>Product Comparison</h2>
+                        <span class="close-comparison">&times;</span>
+                    </div>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    ${selectedProducts.map(product => 
+                                        `<th>${product.querySelector('.product-title').textContent}</th>`
+                                    ).join('')}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Price</strong></td>
+                                    ${selectedProducts.map(product => 
+                                        `<td>${product.querySelector('.product-price').textContent}</td>`
+                                    ).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>Features</strong></td>
+                                    ${selectedProducts.map(product => {
+                                        const features = Array.from(product.querySelectorAll('.product-features li'))
+                                            .map(li => li.textContent).join('<br>');
+                                        return `<td>${features}</td>`;
+                                    }).join('')}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            comparisonModal.innerHTML = comparisonHTML;
+            document.body.appendChild(comparisonModal);
+            
+            comparisonModal.querySelector('.close-comparison').addEventListener('click', () => {
+                comparisonModal.remove();
+            });
+        }
+
+        // Initialize comparison feature
+        document.addEventListener('DOMContentLoaded', addPriceComparison);
+
+        // Newsletter subscription
+        function addNewsletterSignup() {
+            const newsletter = document.createElement('section');
+            newsletter.className = 'newsletter-section';
+            newsletter.innerHTML = `
+                <div class="container">
+                    <div class="newsletter-content">
+                        <h3>📧 Stay Updated with Latest Tech</h3>
+                        <p>Get notified about new arrivals, special deals, and tech news</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            const customOrders = document.querySelector('.custom-orders');
+            customOrders.after(newsletter);
+            
+            newsletter.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target.querySelector('input').value;
+                // Handle newsletter subscription
+                alert(`Thank you for subscribing with ${email}! You'll receive updates about our latest products.`);
+                e.target.reset();
+            });
+        }
+
+        // Initialize newsletter
+        document.addEventListener('DOMContentLoaded', addNewsletterSignup);
+    </script>
+
+    <!-- Additional CSS for new features -->
+    <style>
+        /* Order Modal Styles */
+        .order-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h2 {
+            color: #00d4ff;
+            font-family: 'Orbitron', monospace;
+            margin: 0;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #00d4ff;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-price {
+            font-size: 1.5rem;
+            color: #00ff88;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .order-submit-btn {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #ffffff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .order-submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .order-submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .delivery-info {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-message h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .order-details {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .order-details h4 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .order-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order-details li {
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+        }
+
+        .close-success-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-success-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Search Styles */
+        .search-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #productSearch {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        #productSearch:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .search-info {
+            color: #00d4ff;
+            font-weight: 500;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .whatsapp-float a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float .tooltip {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-float a:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Compare Mode Styles */
+        .compare-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .compare-toggle button {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .compare-toggle button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .compare-bar {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .compare-checkbox {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: #00d4ff;
+        }
+
+        .comparison-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .comparison-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: auto;
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Newsletter Styles */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(0, 212, 255, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .newsletter-content h3 {
+            font-family: 'Orbitron', monospace;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            max-width: 300px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .comparison-content {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .newsletter-form input {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .compare-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</body>
+</html>

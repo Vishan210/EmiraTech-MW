@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - EmiraTech MW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #00ff88;
+        }
+
+        .header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 10px #00ff88);
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00ff88;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(0,255,136,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            padding: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .search-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: 'Orbitron', monospace;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 25px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Blog Grid */
+        .blog-section {
+            padding: 4rem 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+        }
+
+        .card-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #00ff88;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        .card-excerpt {
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 15px;
+            font-size: 0.7rem;
+            color: #00ff88;
+        }
+
+        .read-more {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+
+        /* Load More Button */
+        .load-more-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        #loadMoreBtn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border: none;
+            border-radius: 30px;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        #loadMoreBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        #loadMoreBtn:disabled {
+            cursor: not-allowed;
+        }
+
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #00ff88;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 4rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .newsletter-container h3 {
+            font-size: 2rem;
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-container p {
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: 'Orbitron', monospace;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #00ff88;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #00ff88;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff4757;
+            transform: scale(1.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active ul {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-form input {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="logo/EmiraTech-MW-Logo-.png" alt="EmiraTech MW Logo"></a>
+            </div>
+            <nav class="nav-menu">
+                <button class="menu-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>The EmiraBlog</h1>
+                <p>Tech insights from Dubai to Malawi - Your guide to smartphones, scams, and smart shopping.</p>
+            </div>
+        </section>
+
+        <section class="search-filter-section">
+            <div class="container">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search articles...">
+                        <button type="button" onclick="searchArticles()">🔍</button>
+                    </div>
+                </div>
+                <div class="filter-tags">
+                    <a href="#" class="filter-tag active" data-category="all">All</a>
+                    <a href="#" class="filter-tag" data-category="reviews">Reviews</a>
+                    <a href="#" class="filter-tag" data-category="guides">Guides</a>
+                    <a href="#" class="filter-tag" data-category="scams">Scam Alert</a>
+                    <a href="#" class="filter-tag" data-category="dubai">Dubai Tech</a>
+                    <a href="#" class="filter-tag" data-category="news">Tech News</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="container">
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be dynamically loaded here -->
+                </div>
+                
+                <div class="load-more-section">
+                    <button id="loadMoreBtn" onclick="loadMoreArticles()">Load More Articles</button>
+                    <div id="loadingIndicator" class="loading-indicator">
+                        <p>🔄 Loading more articles...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="newsletter-container">
+                <h3>Stay Updated</h3>
+                <p>Get the latest tech insights, product reviews, and scam alerts delivered to your inbox.</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Article Title</h2>
+                <button class="close-btn" onclick="closeArticle()">&times;</button>
+            </div>
+            <div id="articleContent">
+                <!-- Article content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Article database
+        const articles = {
+            'smartphone-future': {
+                title: 'The Future of Smartphones is Here',
+                content: `
+                    <h3>Revolutionary Changes Coming to Mobile Technology</h3>
+                    <p>The smartphone industry is undergoing its biggest transformation since the original iPhone launch. From foldable screens to AI-powered cameras, here's what's shaping the future of mobile devices.</p>
+                    
+                    <h4>Key Innovations to Watch:</h4>
+                    <p><strong>Foldable Technology:</strong> Samsung and other manufacturers are perfecting flexible display technology that allows phones to transform into tablets.</p>
+                    
+                    <p><strong>AI Integration:</strong> Machine learning is becoming deeply integrated into every aspect of smartphone operation, from photography to battery management.</p>
+                    
+                    <p><strong>5G Connectivity:</strong> Ultra-fast networks are enabling new possibilities for mobile computing and real-time applications.</p>
+                    
+                    <p>For Malawian consumers, these advances mean more powerful devices at increasingly accessible price points as older technologies become more affordable.</p>
+                `
+            },
+            'wearable-guide': {
+                title: 'Choosing the Right Wearable for You',
+                content: `
+                    <h3>Complete Guide to Smartwatches and Fitness Trackers</h3>
+                    <p>With so many wearable options available, choosing the right device can be overwhelming. This guide breaks down the key features to consider.</p>
+                    
+                    <h4>Types of Wearables:</h4>
+                    <p><strong>Smartwatches:</strong> Full-featured devices that can run apps, make calls, and provide comprehensive health monitoring.</p>
+                    
+                    <p><strong>Fitness Trackers:</strong> Focused on health metrics like steps, heart rate, and sleep tracking with longer battery life.</p>
+                    
+                    <p><strong>Hybrid Watches:</strong> Traditional watch design with smart features, perfect for professional settings.</p>
+                    
+                    <h4>Key Considerations:</h4>
+                    <p>Battery life, water resistance, compatibility with your smartphone, and available health sensors should all factor into your decision.</p>
+                `
+            },
+            'audio-trends': {
+                title: 'The Rise of High-Fidelity Audio',
+                content: `
+                    <h3>Why Audio Quality Matters More Than Ever</h3>
+                    <p>As streaming services offer higher quality audio and more people work from home, the demand for better audio equipment has skyrocketed.</p>
+                    
+                    <h4>Trending Audio Technologies:</h4>
+                    <p><strong>Spatial Audio:</strong> 3D sound experiences that immerse listeners in their music and movies.</p>
+                    
+                    <p><strong>Active Noise Cancellation:</strong> Essential for noisy environments and better focus.</p>
+                    
+                    <p><strong>Hi-Res Audio:</strong> Streaming services now support lossless audio formats for audiophile-quality sound.</p>
+                    
+                    <p>Whether you're using wireless earbuds or premium headphones, understanding these features helps you make the best choice for your listening preferences.</p>
+                `
+            }
+        };
+
+        // Initialize blog posts
+        const blogPosts = [
+            {
+                id: 'smartphone-future',
+                category: 'reviews',
+                title: 'The Future of Smartphones is Here',
+                meta: 'Dec 28, 2024 • 5 min read',
+                excerpt: 'Discover the revolutionary changes coming to mobile technology, from foldable screens to AI integration.',
+                tags: ['Smartphones', 'AI', 'Innovation'],
+                emoji: '📱'
+            },
+            {
+                id: 'wearable-guide',
+                category: 'guides',
+                title: 'Choosing the Right Wearable for You',
+                meta: 'Dec 27, 2024 • 4 min read',
+                excerpt: 'A comprehensive guide to smartwatches, fitness trackers, and finding the perfect wearable device.',
+                tags: ['Wearables', 'Guide', 'Health'],
+                emoji: '⌚'
+            },
+            {
+                id: 'audio-trends',
+                category: 'reviews',
+                title: 'The Rise of High-Fidelity Audio',
+                meta: 'Dec 26, 2024 • 6 min read',
+                excerpt: 'Exploring the latest trends in personal and home audio systems for the modern listener.',
+                tags: ['Audio', 'Reviews', 'Technology'],
+                emoji: '🎧'
+            },
+            {
+                category: 'scams',
+                title: 'Avoid These Phone Scams in Malawi',
+                meta: 'Dec 24, 2024 • 4 min read',
+                excerpt: 'Common phone and tech scams targeting Malawians and how to protect yourself and your family.',
+                tags: ['Safety', 'Scams', 'Malawi'],
+                emoji: '⚠️'
+            },
+            {
+                category: 'dubai',
+                title: 'Best Dubai Electronics Markets 2025',
+                meta: 'Dec 23, 2024 • 7 min read',
+                excerpt: 'Updated guide to Dubai\'s top electronics markets, including prices, locations, and insider tips.',
+                tags: ['Dubai', 'Shopping', 'Markets'],
+                emoji: '🏪'
+            },
+            {
+                category: 'news',
+                title: 'Apple iPhone 16 vs Samsung S24 Ultra',
+                meta: 'Dec 21, 2024 • 8 min read',
+                excerpt: 'Detailed comparison of the latest flagship phones, considering features, price, and value for money.',
+                tags: ['iPhone', 'Samsung', 'Comparison'],
+                emoji: '🆚'
+            }
+        ];
+
+        // Load initial blog posts
+        function loadBlogPosts() {
+            const blogGrid = document.getElementById('blogGrid');
+            blogGrid.innerHTML = '';
+            
+            blogPosts.forEach((post, index) => {
+                const article = document.createElement('article');
+                article.className = 'blog-card';
+                article.dataset.category = post.category;
+                article.style.animationDelay = `${index * 0.1}s`;
+                
+                article.innerHTML = `
+                    <div class="card-image">${post.emoji}</div>
+                    <div class="card-content">
+                        <h3 class="card-title">${post.title}</h3>
+                        <div class="card-meta">${post.meta}</div>
+                        <p class="card-excerpt">${post.excerpt}</p>
+                        <div class="card-tags">
+                            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="#" class="read-more" onclick="openArticle('${post.id || 'generic'}')" ${!post.id ? 'data-message="Coming soon! This article is being written."' : ''}>Read More →</a>
+                    </div>
+                `;
+                
+                blogGrid.appendChild(article);
+            });
+        }
+
+        // Search functionality
+        function searchArticles() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.blog-card');
+            const activeCategory = document.querySelector('.filter-tag.active').dataset.category;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const matchesSearch = searchTerm === '' || 
+                    title.includes(searchTerm) || 
+                    excerpt.includes(searchTerm) || 
+                    tags.some(tag => tag.includes(searchTerm));
+                
+                const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+                
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter by category
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active tag
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter articles
+                const category = this.dataset.category;
+                const cards = document.querySelectorAll('.blog-card');
+                
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Article modal functions
+        function openArticle(articleId) {
+            const modal = document.getElementById('articleModal');
+            const content = document.getElementById('articleContent');
+            const title = document.getElementById('modalTitle');
+            
+            if (articles[articleId]) {
+                title.textContent = articles[articleId].title;
+                content.innerHTML = articles[articleId].content;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            } else {
+                // For articles without full content
+                const link = event.target;
+                if (link.dataset.message) {
+                    alert(link.dataset.message);
+                }
+            }
+        }
+
+        function closeArticle() {
+            const modal = document.getElementById('articleModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            
+            // Simulate subscription
+            alert(`✅ Thank you! You've been subscribed to EmiraBlog updates.\n\nWe'll send weekly tech insights to: ${email}`);
+            event.target.reset();
+        }
+
+       // Load more articles
+       let articlesLoaded = 6;
+        const totalArticles = blogPosts.length + 6; // Additional placeholder articles
+
+        function loadMoreArticles() {
+            const blogGrid = document.getElementById('blogGrid');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            loadMoreBtn.disabled = true;
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                // Additional articles to load
+                const additionalArticles = [
+                    {
+                        category: 'guides',
+                        title: 'Mobile Photography Masterclass',
+                        meta: 'Dec 20, 2024 • 5 min read',
+                        excerpt: 'Transform your smartphone into a professional camera with these advanced photography techniques.',
+                        tags: ['Photography', 'Mobile', 'Tips'],
+                        emoji: '📸'
+                    },
+                    {
+                        category: 'scams',
+                        title: 'WhatsApp Business Scams to Watch',
+                        meta: 'Dec 19, 2024 • 3 min read',
+                        excerpt: 'New scams targeting WhatsApp Business users and small business owners in Africa.',
+                        tags: ['WhatsApp', 'Business', 'Security'],
+                        emoji: '💬'
+                    },
+                    {
+                        category: 'dubai',
+                        title: 'Duty-Free Electronics: Dubai vs Other Airports',
+                        meta: 'Dec 18, 2024 • 6 min read',
+                        excerpt: 'Comparing electronics prices at Dubai International Airport with other major travel hubs.',
+                        tags: ['Travel', 'Duty-Free', 'Pricing'],
+                        emoji: '✈️'
+                    },
+                    {
+                        category: 'reviews',
+                        title: 'Budget Gaming Phones Under $300',
+                        meta: 'Dec 17, 2024 • 7 min read',
+                        excerpt: 'Best gaming smartphones that won\'t break the bank, tested with popular mobile games.',
+                        tags: ['Gaming', 'Budget', 'Performance'],
+                        emoji: '🎮'
+                    },
+                    {
+                        category: 'news',
+                        title: 'AI Revolution in Smartphones 2025',
+                        meta: 'Dec 16, 2024 • 5 min read',
+                        excerpt: 'How artificial intelligence is transforming the way we use smartphones in everyday life.',
+                        tags: ['AI', 'Innovation', 'Future'],
+                        emoji: '🤖'
+                    },
+                    {
+                        category: 'guides',
+                        title: 'Data Security for Small Businesses',
+                        meta: 'Dec 15, 2024 • 8 min read',
+                        excerpt: 'Essential cybersecurity practices for small businesses in Malawi and across Africa.',
+                        tags: ['Security', 'Business', 'Africa'],
+                        emoji: '🔐'
+                    }
+                ];
+                
+                // Add new articles to display
+                const articlesToShow = additionalArticles.slice(0, 3);
+                articlesToShow.forEach((post, index) => {
+                    const article = document.createElement('article');
+                    article.className = 'blog-card';
+                    article.dataset.category = post.category;
+                    article.style.animationDelay = `${index * 0.1}s`;
+                    
+                    article.innerHTML = `
+                        <div class="card-image">${post.emoji}</div>
+                        <div class="card-content">
+                            <h3 class="card-title">${post.title}</h3>
+                            <div class="card-meta">${post.meta}</div>
+                            <p class="card-excerpt">${post.excerpt}</p>
+                            <div class="card-tags">
+                                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            <a href="#" class="read-more" onclick="openArticle('generic')" data-message="Coming soon! This article is being written.">Read More →</a>
+                        </div>
+                    `;
+                    
+                    blogGrid.appendChild(article);
+                });
+                
+                articlesLoaded += 3;
+                loadingIndicator.style.display = 'none';
+                loadMoreBtn.disabled = false;
+                
+                // Hide load more button if all articles are loaded
+                if (articlesLoaded >= 12) {
+                    loadMoreBtn.style.display = 'none';
+                    loadingIndicator.innerHTML = '<p style="color: #00ff88;">✨ You\'ve reached the end! More articles coming soon.</p>';
+                    loadingIndicator.style.display = 'block';
+                }
+            }, 1500);
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        // Add event listener to menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', toggleMobileMenu);
+
+        // Search input event listener
+        document.getElementById('searchInput').addEventListener('input', searchArticles);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchArticles();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('articleModal');
+            if (e.target === modal) {
+                closeArticle();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeArticle();
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all blog cards for animation
+        function observeBlogCards() {
+            document.querySelectorAll('.blog-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Enhanced search with highlighting
+        function highlightSearchTerm(text, term) {
+            if (!term) return text;
+            const regex = new RegExp(`(${term})`, 'gi');
+            return text.replace(regex, '<mark style="background: rgba(0, 255, 136, 0.3); color: #00ff88;">$1</mark>');
+        }
+
+        // Advanced search functionality
+        function searchArticles() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.blog-card');
+            const activeCategory = document.querySelector('.filter-tag.active').dataset.category;
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const matchesSearch = searchTerm === '' || 
+                    title.includes(searchTerm) || 
+                    excerpt.includes(searchTerm) || 
+                    tags.some(tag => tag.includes(searchTerm));
+                
+                const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+                
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.5s ease forwards';
+                    visibleCount++;
+                    
+                    // Highlight search terms
+                    if (searchTerm) {
+                        const titleElement = card.querySelector('.card-title');
+                        const excerptElement = card.querySelector('.card-excerpt');
+                        
+                        titleElement.innerHTML = highlightSearchTerm(titleElement.textContent, searchTerm);
+                        excerptElement.innerHTML = highlightSearchTerm(excerptElement.textContent, searchTerm);
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show no results message
+            const blogGrid = document.getElementById('blogGrid');
+            let noResultsMsg = document.querySelector('.no-results');
+            
+            if (visibleCount === 0 && searchTerm) {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.className = 'no-results';
+                    noResultsMsg.innerHTML = `
+                        <div style="text-align: center; padding: 4rem 2rem; color: #b0b0b0;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🔍</div>
+                            <h3 style="color: #00ff88; margin-bottom: 1rem;">No articles found</h3>
+                            <p>Try different keywords or browse our categories above.</p>
+                        </div>
+                    `;
+                    blogGrid.appendChild(noResultsMsg);
+                }
+                noResultsMsg.style.display = 'block';
+            } else if (noResultsMsg) {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+
+        // Analytics tracking (placeholder)
+        function trackEvent(action, category, label) {
+            // Placeholder for analytics tracking
+            console.log(`Analytics: ${action} - ${category} - ${label}`);
+        }
+
+        // Track user interactions
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.read-more')) {
+                trackEvent('click', 'blog', 'read_more');
+            } else if (e.target.matches('.filter-tag')) {
+                trackEvent('click', 'filter', e.target.textContent);
+            } else if (e.target.matches('#loadMoreBtn')) {
+                trackEvent('click', 'navigation', 'load_more');
+            }
+        });
+
+        // Initialize the blog
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlogPosts();
+            observeBlogCards();
+            
+            // Add some loading animation
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        });
+
+        // Service Worker registration for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed');
+                    });
+            });
+        }
+
+        // Dark mode preference detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode-preferred');
+        }
+
+        // Performance optimization: Lazy loading for images
+        function lazyLoadImages() {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Call lazy loading function
+        lazyLoadImages();
+    </script>
+</body>
+</html>
