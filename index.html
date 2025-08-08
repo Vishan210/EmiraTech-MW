@@ -5,6 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EmiraTech MW</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .order-modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slide-down 0.3s ease-out;
+        }
+        @keyframes slide-down {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .close-modal {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #000;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .order-submit-btn {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .order-submit-btn:hover {
+            transform: scale(1.02);
+        }
+        .order-submit-btn span {
+            margin-right: 0.5rem;
+        }
+    </style>
     <link rel="icon" href="images/EmiraTech-MW-Logo-.png" type="image/png">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -38,7 +129,7 @@
                 <p class="hero-tagline"></p>
                 <div class="cta-buttons">
                     <a href="products.html" class="btn btn-primary">View Products</a>
-                    <a href="https://wa.me/265988114909?text=Hi%20EmiraTech,%20I'd%20like%20to%20request%20a%20gadget." class="btn btn-secondary">Request a Gadget</a>
+                    <button id="request-gadget-btn" class="btn btn-secondary">Request a Gadget</button>
                 </div>
             </div>
         </section>
@@ -166,7 +257,7 @@
             <div class="container">
                 <h3>Looking for Something Specific?</h3>
                 <p>If it's not in our catalog, we can source it for you from the UAE. All devices are new, sealed, and sourced within a week. Let us know what you're looking for!</p>
-                <a href="https://wa.me/265988114909?text=Hi%20EmiraTech,%20I'd%20like%20to%20make%20a%20custom%20order." class="btn btn-primary">Request a Custom Order</a>
+                <button id="custom-order-btn" class="btn btn-primary">Request a Custom Order</button>
             </div>
         </section>
 
@@ -288,5 +379,187 @@ s
     </a>
 
     <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Order Modal functionality for gadget requests
+    function showRequestModal() {
+        const modal = document.createElement('div');
+        modal.className = 'order-modal'; // Re-use existing modal styles
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Request a Gadget</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Looking for something we don't have? Let us know!</p>
+                    <form class="order-form" action="https://formspree.io/f/xyzpbbyo" method="POST">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" required placeholder="+265 xxx xxx xxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Gadget Details</label>
+                            <textarea name="gadget_request" required placeholder="Please describe the gadget you are looking for (e.g., model, brand, specs)."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Reference Picture (Optional)</label>
+                            <input type="file" name="attachment" accept="image/*">
+                            <small style="display: block; margin-top: 5px; color: #777;">Note: File uploads require a paid Formspree plan.</small>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="order-submit-btn">
+                                <span>📨</span> Submit Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close modal functionality
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.remove();
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+
+    // Event listener for the request button
+    const requestButton = document.getElementById('request-gadget-btn');
+    if (requestButton) {
+        requestButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            showRequestModal();
+        });
+    }
+
+    // --- Payment Order Modal ---
+    function showPaymentOrderModal(productTitle) {
+        const modal = document.createElement('div');
+        modal.className = 'order-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Order ${productTitle}</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div style="background-color: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #007bff; color: #000;">
+                        <h4 style="margin-top: 0; color: #007bff;">Payment Details (35% Deposit Required)</h4>
+                        <p>Please pay at least 35% of the item cost to one of the following accounts and paste the transaction message below.</p>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><strong>Airtel Money:</strong> Code 49867 (Name: Anusa Assam)</li>
+                            <li><strong>TNM Mpamba:</strong> Code 58695 (Name: Anusa Hussein)</li>
+                            <li><strong>National Bank:</strong> Acc# 1008712766 (Name: Avisha Hassan)</li>
+                        </ul>
+                        <p>We will review your transaction within 3 minutes and provide feedback.</p>
+                    </div>
+                    <form class="order-form" action="https://formspree.io/f/xyzpbbyo" method="POST">
+                        <input type="hidden" name="product" value="${productTitle}">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" required placeholder="+265 xxx xxx xxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Transaction Confirmation</label>
+                            <textarea name="transaction_confirmation" required placeholder="Paste the full transaction success message here." rows="4"></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="order-submit-btn">
+                                <span>🛒</span> Submit Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        modal.querySelector('.close-modal').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+    }
+
+    document.querySelectorAll('.learn-more-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const card = this.closest('.product-card');
+            const productTitle = card.querySelector('.product-title').textContent;
+            showPaymentOrderModal(productTitle);
+        });
+    });
+
+    // --- Custom Order Modal ---
+    function showCustomOrderModal() {
+        const modal = document.createElement('div');
+        modal.className = 'order-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Request a Custom Order</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Let us know what you're looking for, and we'll source it for you from the UAE.</p>
+                    <form class="order-form" action="https://formspree.io/f/xyzpbbyo" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" required placeholder="+265 xxx xxx xxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Custom Order Details</label>
+                            <textarea name="custom_order_details" required placeholder="Describe the item, including brand, model, color, and any other specifics."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Reference Picture (Optional)</label>
+                            <input type="file" name="attachment" accept="image/*">
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="order-submit-btn"><span>📝</span> Submit Custom Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-modal').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    document.getElementById('custom-order-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        showCustomOrderModal();
+    });
+});
+</script>
 </body>
 </html>
