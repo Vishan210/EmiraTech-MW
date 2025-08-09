@@ -6,6 +6,8 @@
     <title>EmiraTech MW</title>
     <link rel="icon" href="logo/EmiraTech-MW-Logo-.png" type="image/png">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/EmiraTech-MW/manifest.json">
+    <meta name="theme-color" content="#003366">
     <style>
         .order-modal {
             display: flex;
@@ -719,17 +721,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-          console.error('Service Worker registration failed:', error);
-        });
-    });
-  }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/EmiraTech-MW/service-worker.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('SW registration failed:', err));
+  });
+}
 </script>
 </body>
 </html>

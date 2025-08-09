@@ -6,6 +6,8 @@
     <title>Products - EmiraTech MW</title>
     <link rel="icon" href="logo/EmiraTech-MW-Logo-.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/EmiraTech-MW/manifest.json">
+    <meta name="theme-color" content="#003366">
     <style>
         * {
             margin: 0;
@@ -1248,9 +1250,9 @@
             background: linear-gradient(135deg, #00d4ff, #0099cc);
             color: #ffffff;
             border: none;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 25px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
             margin-bottom: 1rem;
@@ -1617,14 +1619,10 @@
     </style>
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-          console.error('Service Worker registration failed:', error);
-        });
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/EmiraTech-MW/service-worker.js')
+        .then(reg => console.log('Service worker registered:', reg.scope))
+        .catch(err => console.error('SW registration failed:', err));
     });
   }
 </script>
